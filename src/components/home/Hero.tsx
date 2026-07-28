@@ -21,33 +21,26 @@ export function Hero({ logoUrl, headline, subheadline }: { logoUrl: string; head
         />
       </div>
 
+      <h1 className="sr-only">{headline}</h1>
+
       <motion.div
         initial={{ scale: 0.85 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className="relative z-10 mb-8"
+        className="relative z-10 mb-4 w-full"
       >
-        <div className="relative h-20 w-56 sm:h-28 sm:w-80">
-          <div className="absolute inset-0 rounded-3xl bg-white/10 blur-2xl" />
+        <div className="relative mx-auto aspect-[1100/487] w-full max-w-xs sm:max-w-xl lg:max-w-3xl">
+          <div className="absolute inset-0 scale-110 rounded-3xl bg-white/10 blur-3xl" />
           <Image
             src={logoUrl}
             alt="Scrap"
             fill
-            sizes="(min-width: 640px) 320px, 224px"
-            className="relative object-contain drop-shadow-[0_0_40px_rgba(192,192,192,0.35)]"
+            sizes="(min-width: 1024px) 768px, (min-width: 640px) 576px, 320px"
+            className="relative object-contain drop-shadow-[0_0_50px_rgba(192,192,192,0.35)]"
             priority
           />
         </div>
       </motion.div>
-
-      <motion.h1
-        initial={{ y: 24 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-        className="relative z-10 font-heading text-5xl font-bold uppercase tracking-wide text-chrome-gradient sm:text-7xl lg:text-8xl"
-      >
-        Cuts by Scrap
-      </motion.h1>
 
       <motion.div
         initial={{ y: 20 }}
