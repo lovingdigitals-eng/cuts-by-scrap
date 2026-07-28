@@ -27,13 +27,13 @@ export function Hero({ logoUrl, headline, subheadline }: { logoUrl: string; head
         transition={{ duration: 0.8, ease: "easeOut" }}
         className="relative z-10 mb-8"
       >
-        <div className="relative h-40 w-40 sm:h-52 sm:w-52">
-          <div className="absolute inset-0 rounded-full bg-white/10 blur-2xl" />
+        <div className="relative h-20 w-56 sm:h-28 sm:w-80">
+          <div className="absolute inset-0 rounded-3xl bg-white/10 blur-2xl" />
           <Image
             src={logoUrl}
-            alt="Cuts by Scrap"
+            alt="Scrap"
             fill
-            sizes="208px"
+            sizes="(min-width: 640px) 320px, 224px"
             className="relative object-contain drop-shadow-[0_0_40px_rgba(192,192,192,0.35)]"
             priority
           />

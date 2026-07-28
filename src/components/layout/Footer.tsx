@@ -36,11 +36,8 @@ export function Footer({
     <footer className="border-t border-border-dim bg-[#050505]">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-16 sm:px-10 lg:grid-cols-4 lg:px-16">
         <div>
-          <Link href="/" className="flex items-center gap-3">
-            <Image src={settings.logoUrl} alt="Cuts by Scrap" width={48} height={48} className="rounded-full" />
-            <span className="font-heading text-lg font-bold uppercase tracking-wide text-chrome-gradient">
-              Cuts by Scrap
-            </span>
+          <Link href="/" className="flex items-center">
+            <Image src={settings.logoUrl} alt="Scrap" width={900} height={407} className="h-10 w-auto" />
           </Link>
           <p className="mt-4 max-w-xs text-sm text-white/50">
             Student barber. Precision cuts. Built different.

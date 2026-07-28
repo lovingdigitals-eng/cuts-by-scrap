@@ -42,16 +42,27 @@ export function Navbar({
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 transition-all duration-300",
-        scrolled ? "glass shadow-[0_4px_30px_rgba(0,0,0,0.5)]" : "bg-transparent border-b border-transparent"
+        "sticky top-0 z-40 border-b transition-all duration-300",
+        scrolled
+          ? "glass border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+          : "border-transparent bg-transparent"
       )}
+      style={{
+        borderImage: scrolled
+          ? "linear-gradient(90deg, transparent, rgba(192,192,192,0.5) 20%, rgba(232,232,232,0.9) 50%, rgba(192,192,192,0.5) 80%, transparent) 1"
+          : undefined,
+      }}
     >
       <div className="mx-auto flex h-18 max-w-6xl items-center justify-between px-6 py-3 sm:px-10 lg:px-16">
-        <Link href="/" className="flex items-center gap-3">
-          <Image src={logoUrl} alt="Cuts by Scrap" width={44} height={44} className="rounded-full" priority />
-          <span className="font-heading text-lg font-bold uppercase tracking-wide text-chrome-gradient hidden sm:block">
-            Cuts by Scrap
-          </span>
+        <Link href="/" className="flex items-center">
+          <Image
+            src={logoUrl}
+            alt="Scrap"
+            width={900}
+            height={407}
+            className="h-9 w-auto drop-shadow-[0_0_18px_rgba(192,192,192,0.25)] sm:h-11"
+            priority
+          />
         </Link>
 
         <nav className="hidden items-center gap-8 lg:flex">
@@ -60,8 +71,8 @@ export function Navbar({
               key={link.href}
               href={link.href}
               className={cn(
-                "font-heading text-sm font-semibold uppercase tracking-wide transition-colors hover:text-chrome",
-                pathname === link.href ? "text-chrome" : "text-white/70"
+                "font-heading text-sm font-semibold uppercase tracking-[0.08em] transition-colors hover:text-chrome-bright",
+                pathname === link.href ? "text-chrome-gradient" : "text-white/70"
               )}
             >
               {link.label}
