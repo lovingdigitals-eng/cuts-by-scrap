@@ -1,0 +1,117 @@
+// Cuts by Scrap — data model
+// Prisma 7: driver-adapter workflow (Postgres via Netlify DB), client generated to src/generated/prisma
+// status/category fields are plain Strings constrained by TS union types + zod schemas in src/lib/validation.ts
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  price       Float
+  duration    Int // minutes
+  description String
+  order       Int      @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  appointments Appointment[]
+}
+
+model PortfolioImage {
+  id        String   @id @default(cuid())
+  url       String
+  beforeUrl String?
+  category  String // FADE | TAPER | BURST_FADE | DESIGN | BEARD | KIDS
+  caption   String?
+  featured  Boolean  @default(false)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  name      String
+  avatarUrl String?
+  rating    Int // 1-5
+  text      String
+  date      DateTime @default(now())
+  featured  Boolean  @default(false)
+  approved  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model FaqItem {
+  id       String @id @default(cuid())
+  question String
+  answer   String
+  order    Int    @default(0)
+}
+
+model Appointment {
+  id           String   @id @default(cuid())
+  serviceId    String
+  service      Service  @relation(fields: [serviceId], references: [id])
+  customerName String
+  phone        String
+  email        String?
+  notes        String?
+  date         String // yyyy-MM-dd
+  startTime    String // HH:mm
+  endTime      String // HH:mm
+  status       String   @default("PENDING") // PENDING|CONFIRMED|COMPLETED|CANCELLED|NO_SHOW
+  reminderSent Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([date])
+  @@index([status])
+}
+
+model BusinessHours {
+  id         String  @id @default(cuid())
+  dayOfWeek  Int     @unique // 0=Sunday .. 6=Saturday
+  isOpen     Boolean @default(true)
+  openTime   String  @default("09:00")
+  closeTime  String  @default("18:00")
+  lunchStart String?
+  lunchEnd   String?
+}
+
+model BlockedDate {
+  id     String  @id @default(cuid())
+  date   String  @unique // yyyy-MM-dd
+  reason String?
+}
+
+model SiteSettings {
+  id                         String  @id @default("singleton")
+  heroHeadline               String  @default("CUTS BY SCRAP")
+  heroSubheadline            String  @default("Student Barber. Precision Cuts. Built Different.")
+  aboutText                  String  @default("")
+  contactPhone               String  @default("")
+  contactEmail               String  @default("")
+  instagram                  String  @default("")
+  facebook                   String  @default("")
+  tiktok                     String  @default("")
+  address                    String  @default("")
+  mapEmbedUrl                String  @default("")
+  bookingEnabled             Boolean @default(true)
+  vacationMode               Boolean @default(false)
+  defaultAppointmentDuration Int     @default(30)
+  maxAppointmentsPerDay      Int     @default(12)
+  logoUrl                    String  @default("/logo.png")
+}
+
+model AdminUser {
+  id           String @id @default("singleton")
+  username     String @unique
+  passwordHash String
+}
