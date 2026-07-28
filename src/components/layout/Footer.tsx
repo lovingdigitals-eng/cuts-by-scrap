@@ -109,8 +109,11 @@ export function Footer({
         </div>
       </div>
 
-      <div className="border-t border-border-dim px-6 py-6 text-center text-xs uppercase tracking-[0.2em] text-white/40 sm:px-10 lg:px-16">
-        &copy; {new Date().getFullYear()} Cuts by Scrap. Built Different.
+      <div className="flex flex-col items-center justify-center gap-2 border-t border-border-dim px-6 py-6 text-center text-xs uppercase tracking-[0.2em] text-white/40 sm:flex-row sm:justify-between sm:px-10 lg:px-16">
+        <span>&copy; {new Date().getFullYear()} Cuts by Scrap. Built Different.</span>
+        <Link href="/admin/login" className="tracking-[0.2em] text-white/25 transition-colors hover:text-white/50">
+          Admin
+        </Link>
       </div>
     </footer>
   );
