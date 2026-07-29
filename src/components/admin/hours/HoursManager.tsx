@@ -158,49 +158,69 @@ export function HoursManager() {
         <div className="mt-4 space-y-3">
           {hours
             .sort((a, b) => a.dayOfWeek - b.dayOfWeek)
-            .map((h) => (
-              <div
-                key={h.dayOfWeek}
-                className="grid grid-cols-2 items-center gap-3 rounded-lg border border-border-dim p-3 sm:grid-cols-6"
-              >
-                <span className="text-sm font-semibold text-white">{DAY_NAMES[h.dayOfWeek]}</span>
-                <label className="flex items-center gap-2 text-xs text-white/60">
-                  <input
-                    type="checkbox"
-                    checked={h.isOpen}
-                    onChange={(e) => updateDay(h.dayOfWeek, { isOpen: e.target.checked })}
-                    className="h-3.5 w-3.5 rounded border-border-dim"
-                  />
-                  Open
-                </label>
-                <Input
-                  type="time"
-                  value={h.openTime}
-                  disabled={!h.isOpen}
-                  onChange={(e) => updateDay(h.dayOfWeek, { openTime: e.target.value })}
-                />
-                <Input
-                  type="time"
-                  value={h.closeTime}
-                  disabled={!h.isOpen}
-                  onChange={(e) => updateDay(h.dayOfWeek, { closeTime: e.target.value })}
-                />
-                <Input
-                  type="time"
-                  placeholder="Lunch start"
-                  value={h.lunchStart || ""}
-                  disabled={!h.isOpen}
-                  onChange={(e) => updateDay(h.dayOfWeek, { lunchStart: e.target.value || null })}
-                />
-                <Input
-                  type="time"
-                  placeholder="Lunch end"
-                  value={h.lunchEnd || ""}
-                  disabled={!h.isOpen}
-                  onChange={(e) => updateDay(h.dayOfWeek, { lunchEnd: e.target.value || null })}
-                />
-              </div>
-            ))}
+            .map((h) => {
+              const hasLunch = h.lunchStart != null && h.lunchEnd != null;
+              return (
+                <div key={h.dayOfWeek} className="rounded-lg border border-border-dim p-3">
+                  <div className="grid grid-cols-2 items-center gap-3 sm:grid-cols-4">
+                    <span className="text-sm font-semibold text-white">{DAY_NAMES[h.dayOfWeek]}</span>
+                    <label className="flex items-center gap-2 text-xs text-white/60">
+                      <input
+                        type="checkbox"
+                        checked={h.isOpen}
+                        onChange={(e) => updateDay(h.dayOfWeek, { isOpen: e.target.checked })}
+                        className="h-3.5 w-3.5 rounded border-border-dim"
+                      />
+                      Open
+                    </label>
+                    <Input
+                      type="time"
+                      value={h.openTime}
+                      disabled={!h.isOpen}
+                      onChange={(e) => updateDay(h.dayOfWeek, { openTime: e.target.value })}
+                    />
+                    <Input
+                      type="time"
+                      value={h.closeTime}
+                      disabled={!h.isOpen}
+                      onChange={(e) => updateDay(h.dayOfWeek, { closeTime: e.target.value })}
+                    />
+                  </div>
+                  <div className="mt-3 grid grid-cols-2 items-center gap-3 border-t border-border-dim/60 pt-3 sm:grid-cols-4">
+                    <span className="text-xs text-white/40">Lunch break</span>
+                    <label className="flex items-center gap-2 text-xs text-white/60">
+                      <input
+                        type="checkbox"
+                        checked={hasLunch}
+                        disabled={!h.isOpen}
+                        onChange={(e) =>
+                          updateDay(
+                            h.dayOfWeek,
+                            e.target.checked
+                              ? { lunchStart: "13:00", lunchEnd: "14:00" }
+                              : { lunchStart: null, lunchEnd: null }
+                          )
+                        }
+                        className="h-3.5 w-3.5 rounded border-border-dim"
+                      />
+                      Takes a break
+                    </label>
+                    <Input
+                      type="time"
+                      value={h.lunchStart || ""}
+                      disabled={!h.isOpen || !hasLunch}
+                      onChange={(e) => updateDay(h.dayOfWeek, { lunchStart: e.target.value || null })}
+                    />
+                    <Input
+                      type="time"
+                      value={h.lunchEnd || ""}
+                      disabled={!h.isOpen || !hasLunch}
+                      onChange={(e) => updateDay(h.dayOfWeek, { lunchEnd: e.target.value || null })}
+                    />
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </GlassCard>
 
