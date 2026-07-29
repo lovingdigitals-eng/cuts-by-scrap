@@ -108,6 +108,7 @@ model SiteSettings {
   defaultAppointmentDuration Int     @default(30)
   maxAppointmentsPerDay      Int     @default(12)
   logoUrl                    String  @default("/logo.png")
+  aboutPhotoUrl              String  @default("/about-portrait.jpg")
 }
 
 model AdminUser {

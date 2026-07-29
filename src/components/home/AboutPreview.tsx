@@ -12,14 +12,20 @@ const POINTS = [
   "Growing one client at a time",
 ];
 
-export function AboutPreview({ aboutText }: { aboutText: string }) {
+export function AboutPreview({
+  aboutText,
+  aboutPhotoUrl,
+}: {
+  aboutText: string;
+  aboutPhotoUrl: string;
+}) {
   return (
     <Section id="about">
       <div className="grid items-center gap-12 lg:grid-cols-2">
         <Reveal>
           <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-2xl border border-border-dim shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
             <Image
-              src="/about-portrait.jpg"
+              src={aboutPhotoUrl}
               alt="Scrap, barber behind Cuts by Scrap"
               fill
               sizes="(max-width: 1024px) 100vw, 480px"

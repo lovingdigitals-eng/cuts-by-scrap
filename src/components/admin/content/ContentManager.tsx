@@ -18,6 +18,7 @@ interface Settings {
   address: string;
   mapEmbedUrl: string;
   logoUrl: string;
+  aboutPhotoUrl: string;
 }
 
 export function ContentManager() {
@@ -25,7 +26,9 @@ export function ContentManager() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingAboutPhoto, setUploadingAboutPhoto] = useState(false);
   const logoRef = useRef<HTMLInputElement>(null);
+  const aboutPhotoRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     fetch("/api/admin/settings")
@@ -63,6 +66,18 @@ export function ContentManager() {
     if (data.settings) setSettings(data.settings);
   }
 
+  async function uploadAboutPhoto() {
+    const file = aboutPhotoRef.current?.files?.[0];
+    if (!file) return;
+    setUploadingAboutPhoto(true);
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch("/api/admin/settings/about-photo", { method: "POST", body: form });
+    const data = await res.json();
+    setUploadingAboutPhoto(false);
+    if (data.settings) setSettings(data.settings);
+  }
+
   if (!settings) {
     return <p className="text-sm text-white/40">Loading…</p>;
   }
@@ -87,6 +102,29 @@ export function ContentManager() {
           />
           <Button onClick={uploadLogo} disabled={uploadingLogo} size="sm">
             {uploadingLogo ? "Uploading…" : "Upload New Logo"}
+          </Button>
+        </div>
+      </GlassCard>
+
+      <GlassCard className="mt-6 p-6">
+        <h2 className="font-heading text-lg font-bold uppercase tracking-wide text-chrome">
+          About Photo
+        </h2>
+        <p className="mt-1 text-xs text-white/40">
+          Shown on the homepage About section and the full About page.
+        </p>
+        <div className="mt-4 flex items-center gap-6">
+          <div className="relative h-20 w-16 overflow-hidden rounded-lg border border-border-dim">
+            <Image src={settings.aboutPhotoUrl} alt="About photo" fill sizes="64px" className="object-cover" />
+          </div>
+          <input
+            ref={aboutPhotoRef}
+            type="file"
+            accept="image/*"
+            className="block text-sm text-white/60 file:mr-3 file:rounded-full file:border-0 file:bg-white/10 file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:text-white/70"
+          />
+          <Button onClick={uploadAboutPhoto} disabled={uploadingAboutPhoto} size="sm">
+            {uploadingAboutPhoto ? "Uploading…" : "Upload New Photo"}
           </Button>
         </div>
       </GlassCard>

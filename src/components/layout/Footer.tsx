@@ -111,9 +111,19 @@ export function Footer({
 
       <div className="flex flex-col items-center justify-center gap-2 border-t border-border-dim px-6 py-6 text-center text-xs uppercase tracking-[0.2em] text-white/40 sm:flex-row sm:justify-between sm:px-10 lg:px-16">
         <span>&copy; {new Date().getFullYear()} Cuts by Scrap. Built Different.</span>
-        <Link href="/admin/login" className="tracking-[0.2em] text-white/25 transition-colors hover:text-white/50">
-          Admin
-        </Link>
+        <div className="flex items-center gap-4">
+          <a
+            href="https://truceit-tech.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="tracking-[0.2em] text-white/25 transition-colors hover:text-white/50"
+          >
+            Made by TruceIt Technologies
+          </a>
+          <Link href="/admin/login" className="tracking-[0.2em] text-white/25 transition-colors hover:text-white/50">
+            Admin
+          </Link>
+        </div>
       </div>
     </footer>
   );

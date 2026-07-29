@@ -110,6 +110,7 @@ export const siteSettingsSchema = z.object({
   defaultAppointmentDuration: z.coerce.number().int().min(5).max(480).optional(),
   maxAppointmentsPerDay: z.coerce.number().int().min(1).max(100).optional(),
   logoUrl: z.string().trim().max(300).optional(),
+  aboutPhotoUrl: z.string().trim().max(300).optional(),
 });
 export type SiteSettingsInput = z.infer<typeof siteSettingsSchema>;
 

@@ -33,7 +33,7 @@ export default async function AboutPage() {
           <Reveal>
             <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-2xl border border-border-dim shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
               <Image
-                src="/about-portrait.jpg"
+                src={settings?.aboutPhotoUrl || "/about-portrait.jpg"}
                 alt="Scrap, barber behind Cuts by Scrap"
                 fill
                 sizes="(max-width: 1024px) 100vw, 480px"

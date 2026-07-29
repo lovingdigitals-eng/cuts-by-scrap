@@ -38,6 +38,7 @@ export default async function HomePage() {
           settings?.aboutText ||
           "College student barber passionate about the craft — professional fades, clean cuts, and quality over quantity."
         }
+        aboutPhotoUrl={settings?.aboutPhotoUrl || "/about-portrait.jpg"}
       />
       <ServicesPreview services={services} />
       <PortfolioPreview images={portfolioImages} />
