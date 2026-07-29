@@ -74,14 +74,17 @@ async function sendEmail(to: string, subject: string, text: string) {
   const from = process.env.SMTP_FROM || "Cuts by Scrap <no-reply@cutsbyscrap.com>";
 
   if (!t) {
-    console.log(`[email:noop] to=${to} subject="${subject}" body="${text}"`);
+    // Netlify's function log only surfaces console.error/warn output, not
+    // plain console.log — use warn so the no-op path is actually visible.
+    console.warn(`[email:noop] SMTP not configured — to=${to} subject="${subject}"`);
     return;
   }
 
   try {
-    await t.sendMail({ from, to, subject, text });
+    const info = await t.sendMail({ from, to, subject, text });
+    console.warn(`[email:sent] to=${to} subject="${subject}" response="${info.response}"`);
   } catch (err) {
-    console.error("Failed to send email:", err);
+    console.error(`[email:error] to=${to} subject="${subject}"`, err);
   }
 }
 
